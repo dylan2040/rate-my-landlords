@@ -1,9 +1,9 @@
-import React, { useRef, useState } from 'react';
-import './Style/App.css';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import { gql, useQuery } from '@apollo/client';
-import { useHistory } from 'react-router-dom';
+import React from 'react'
+import SearchBar from './Components/SearchBar'
+import SearchResult from './Components/SearchResult'
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
+// import './Style/App.css';
 
 function App() {
 
@@ -89,6 +89,7 @@ function App() {
   // (<Spinner />)
   // :  
   return (
+<<<<<<< HEAD
 
       <div className="App">
         <h1>RATEMYLANDLORDS</h1>
@@ -103,6 +104,18 @@ function App() {
         <Button variant="contained" onClick={()=>HandleClick({123:456})}>Search</Button>
       </div>
   );
+=======
+    <div>
+      <Router>
+        <Switch>
+          <Route exact path = "/" component={SearchBar}/>
+          <Route exact path = "/searchresults" render={(props) => <SearchResult {...props}/>}/>
+        </Switch>
+      </Router>
+    </div>
+
+  )
+>>>>>>> dcff033cf349e70950343ad30640ca8e1f26d02b
 }
 
-export default App;
+export default App
