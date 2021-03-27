@@ -36,7 +36,6 @@ function SearchBar (){
         }
       })
     }
-    
   }
 
   // return loading ? 

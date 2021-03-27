@@ -40,15 +40,26 @@ const resolvers = {
   Query: {
     getResults: (__, args, context) => {
       console.log(args)
-      return [{
-      name: 'test test', 
-      id: '12345', 
-      city: args.city, 
-      state: 'test', 
-      street: args.address, 
-      zipcode: args.zipcode, 
-      message: 'Got results!'
-    }]},
+      return [
+        {
+          name: 'test test', 
+          id: '12345', 
+          city: args.city, 
+          state: 'test', 
+          street: args.address, 
+          zipcode: args.zipcode, 
+          message: 'Got results!'
+        },
+        {
+          name: 'test test2', 
+          id: '123452', 
+          city: args.city, 
+          state: 'test2', 
+          street: args.address, 
+          zipcode: args.zipcode, 
+          message: 'Got results!2'
+        }
+      ]},
     getAllLandlords: (__, args, context) => [{
       name: 'name', 
       id: args.id, 
