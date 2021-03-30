@@ -88,7 +88,7 @@ const typeDefs = gql`
   }
   type Query {
     hello: String, 
-    findLandlordsByAddress(address: Address): [LandlordSearchResult], 
+    findLandlordsByAddress(street: String, city: String, state: String, zipcode: String): [LandlordSearchResult], 
     findLandordById(id: ID) : FullLandLordProfile
   }
 `;
@@ -112,6 +112,7 @@ const server = new ApolloServer({
   }
 });
  
+
 const app = express();
 server.applyMiddleware({ app });
  
