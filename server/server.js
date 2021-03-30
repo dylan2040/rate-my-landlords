@@ -6,7 +6,8 @@ const Landlords = require('./models/Landlords')
 const Users = require('./models/Users')
 const RealEstateProperty = require('./models/RealEstateProperty')
 const Reviews = require('./models/Reviews')
-const { findLandlordsByAddress, findLandordById } = require('./controllers/landlords')
+const { findLandlordsByAddress } = require('./controllers/findLandlordsByAddress')
+const { findLandordById } = require('./controllers/findLandlordById')
 
 /* DATABASE CONNECTION */
 mongoose.connect(
@@ -89,7 +90,8 @@ const typeDefs = gql`
   type Query {
     hello: String, 
     findLandlordsByAddress(street: String, city: String, state: String, zipcode: String): [LandlordSearchResult], 
-    findLandordById(id: ID) : FullLandLordProfile
+    findLandordById(id: ID) : FullLandLordProfile,
+    getProperties: String
   }
 `;
  
@@ -98,6 +100,11 @@ const resolvers = {
     findLandlordsByAddress,
     findLandordById,
     hello: () => 'hello', 
+    getProperties: async (__, args, context) => {
+      const data = await context.RealEstateProperty.find({})
+      console.log(data)
+      return 'hello'
+    }
   },
 };
  
