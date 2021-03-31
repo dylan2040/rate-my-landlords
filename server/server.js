@@ -2,11 +2,16 @@ const express = require('express');
 const { ApolloServer, gql } = require('apollo-server-express');
 const mongoose = require('mongoose')
 require('dotenv').config()
+const Landlords = require('./models/Landlords')
+const Users = require('./models/Users')
+const RealEstateProperty = require('./models/RealEstateProperty')
+const Reviews = require('./models/Reviews')
+const { findLandlordsByAddress } = require('./controllers/findLandlordsByAddress')
+const { findLandordById } = require('./controllers/findLandlordById')
 
 /* DATABASE CONNECTION */
-//process.env.DB_CONNECTION_STRING, 
 mongoose.connect(
-  "mongodb+srv://Apierre1:Annasophiaasdf1!1@cluster0.w8xvq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",  
+  process.env.DB_CONNECTION_STRING,  
   {useNewUrlParser: true, useUnifiedTopology: true }, 
   () => console.log('connected to db')
 )
@@ -14,50 +19,92 @@ mongoose.connect(
 const db = mongoose.connection 
 
 const typeDefs = gql`
-  type Landlord {
+  type LandlordSearchResult {
     name: String 
-    id: String 
+    id: ID 
+    street: String 
     city: String 
     state: String 
-    street: String 
     zipcode: String
   }
 
-  input AddressObj{
+  type LandlordStats {
+    name: String
+    overallRating: Int 
+    wouldRentAgainLevel: Int 
+    tags: [String]
+    friendlinessRating: Int 
+    communicationRating: Int 
+    maintenanceRating: Int
+    responsivenessRating: Int
+    transactionsIssues: Int
+  }
+
+  type PropertyStats {
+    cleanliness: Int
+    noiseLevel: Int 
+    commonPropertyIssues: [String]
+    commonNeighborTrais: [String]
+  }
+
+  type LandlordReview {
+    wouldRentAgain: Boolean
+    friendlinessRating: Int
+    communicationRating: Int 
+    responsivenessRating: Int
+    maintenanceRating: Int
+    transactionIssues: Boolean 
+  }
+
+  type PropertyReview {
+    moveInDate: String
+    moveOutDate: String
+    cleanliness: Int
+    neighborsVibes: [String]
+    propertyIssues: [String]
+    noiseLevelRating: Int
+    user: String
+  }
+
+  type User {
+    name: String
+    username: String
+    email: String
+    DOB: String
+    properties: [ID]
+  }
+
+  type FullLandLordProfile {
+    LandlordStats: LandlordStats 
+    PropertyStats: PropertyStats
+    LandlordReviews: [LandlordReview]
+    PropertyReviews: [PropertyReview]
+  }
+
+  input Address {
     street: String, 
     city: String, 
+    state: String, 
     zipcode: String
   }
-
   type Query {
-    getResults(city: String, street: String, zipcode: String): [Landlord]
     hello: String, 
-    getAllLandlords(id: String): [Landlord]
+    findLandlordsByAddress(street: String, city: String, state: String, zipcode: String): [LandlordSearchResult], 
+    findLandordById(id: ID) : FullLandLordProfile,
+    getProperties: String
   }
 `;
  
 const resolvers = {
   Query: {
-    getResults: (__, args, context) => {
-      console.log(args)
-      return [{
-      name: 'test test', 
-      id: '12345', 
-      city: args.city, 
-      state: 'test', 
-      street: args.address, 
-      zipcode: args.zipcode, 
-      message: 'Got results!'
-    }]},
-    getAllLandlords: (__, args, context) => [{
-      name: 'name', 
-      id: args.id, 
-      city: 'city', 
-      state: 'state', 
-      street: 'street', 
-      zipcode: 'zipcode'
-    }],
-    hello: () => 'hello'
+    findLandlordsByAddress,
+    findLandordById,
+    hello: () => 'hello', 
+    getProperties: async (__, args, context) => {
+      const data = await context.RealEstateProperty.find({})
+      console.log(data)
+      return 'hello'
+    }
   },
 };
  
@@ -65,10 +112,14 @@ const server = new ApolloServer({
   typeDefs, 
   resolvers, 
   context:  {
-    db
+    Landlords, 
+    Users, 
+    RealEstateProperty, 
+    Reviews,
   }
 });
  
+
 const app = express();
 server.applyMiddleware({ app });
  
