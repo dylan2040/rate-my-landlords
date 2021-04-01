@@ -3,6 +3,7 @@ import SearchBar from './Components/SearchBar'
 import SearchResult from './Components/SearchResult'
 import LandlordProfile from './Components/LandlordProfile'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import LandLordProfile from './Components/LandlordProfile';
 
 // import './Style/App.css';
 

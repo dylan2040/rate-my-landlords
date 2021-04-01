@@ -43,8 +43,9 @@ const fetchPropertiesByAddress = async (args) => {
       address1: street, 
       address2: city + ' ' + state
     }
-  })  
-  return res.data 
+  })
+
+  return res.data
 }
 
 const getMultipleOwnersandGenerateSchema = (propertyData) => {

@@ -12,7 +12,7 @@ const { findLandordById } = require('./controllers/findLandlordById')
 /* DATABASE CONNECTION */
 mongoose.connect(
   process.env.DB_CONNECTION_STRING,  
-  {useNewUrlParser: true, useUnifiedTopology: true },
+  {useNewUrlParser: true, useUnifiedTopology: true }, 
   () => console.log('connected to db')
 )
  

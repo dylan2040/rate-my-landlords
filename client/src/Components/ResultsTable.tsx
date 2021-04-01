@@ -16,8 +16,13 @@ const useStyles = makeStyles({
   },
 });
 
+<<<<<<< HEAD
 function createData(name: string, city: string, state: string, street: string, zipcode: string, id: number) {
   return { name, city, state, street, zipcode, id};
+=======
+function createData(name: string, city: string, state: string, street: string, zipcode: string) {
+  return { name, city, state, street, zipcode};
+>>>>>>> 2a33f75965a05d74c5608b50554418abae1b822c
 }
 
 
@@ -33,6 +38,7 @@ export default function BasicTable(props: any[]) {
     // console.log('landlords', landlords)
     // console.log('landlords types', typeof landlords)
     // console.log('landlord data', props[landlords])
+<<<<<<< HEAD
     const {name, city, state, street, zipcode, id}: {name: string; city: string; state: string; street: string; zipcode: string; id: number} = props[landlords]
     rows.push(createData(name, city, state, street, zipcode, id))
   }
@@ -60,6 +66,12 @@ export default function BasicTable(props: any[]) {
   //     })
   //   }
   // }
+=======
+    const {name, city, state, street, zipcode}: {name: string; city: string; state: string; street: string; zipcode: string} = props[landlords]
+    rows.push(createData(name, city, state, street, zipcode))
+  }
+
+>>>>>>> 2a33f75965a05d74c5608b50554418abae1b822c
 
   const classes = useStyles();
 
@@ -81,7 +93,11 @@ export default function BasicTable(props: any[]) {
               <TableCell component="th" scope="row">
                 <Link to = {{
                   pathname: '/landlordprofile',
+<<<<<<< HEAD
                   state: row.id
+=======
+                  state: row[index]
+>>>>>>> 2a33f75965a05d74c5608b50554418abae1b822c
                 }}>
                   {row.name}
                 </Link>
@@ -97,4 +113,9 @@ export default function BasicTable(props: any[]) {
       </Table>
     </TableContainer>
   );
+<<<<<<< HEAD
 }
+=======
+}
+
+>>>>>>> 2a33f75965a05d74c5608b50554418abae1b822c
