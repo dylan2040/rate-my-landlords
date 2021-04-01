@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const ObjectId = Schema.ObjectId
+const ObjectId = mongoose.Schema.Types.ObjectId
 
 const options = {
   timestamps: true, 
@@ -9,14 +9,14 @@ const options = {
 }
 
 const ReviewsSchema = new mongoose.Schema({
-  reviewedBy: ObjectId, 
+  reviewedBy: {type: ObjectId, ref: 'Users'}, 
   landlordReview: {
     wouldRentAgain: Boolean, 
     friendlinessRating: Number, 
     communicationRating: Number, 
     responsivenessRating: Number, 
     maintenanceRating: Number, 
-    transactionIssues: true
+    transactionIssues: Boolean
   }, 
   propertyReview: {
     moveInDate: Date, 
@@ -28,4 +28,4 @@ const ReviewsSchema = new mongoose.Schema({
   }
 }, options)
 
-module.exports = mongoose.model('Reviews', ReviewsSchema)
+module.exports = mongoose.model('reviews', ReviewsSchema)

@@ -7,8 +7,8 @@ export const TEST_QUERY = gql`
 `
 
 export const GET_RESULTS = gql`
-  query get_landlords($city: String, $street: String, $zipcode: String ) {
-    getResults (city: $city, street: $street, zipcode: $zipcode){
+  query get_landlords ($city: String, $street: String, $zipcode: String) {
+    findLandlordsByAddress (street: $street, city: $city, zipcode: $zipcode){
       name
       id
       city
@@ -20,8 +20,8 @@ export const GET_RESULTS = gql`
 `
 
 export const GET_ALL_LANDLORDS = gql`
-  query($id: String) {
-    getAllLandlords(id: $id) {
+  query findLandordById($id: String) {
+    findLandordById(id: $id) {
     name
     id
     city
@@ -32,9 +32,12 @@ export const GET_ALL_LANDLORDS = gql`
 
 `
 
-
 export interface QueryObj {
   address: string;
   city: string;
   zipcode: string;
+}
+
+export interface IdQuery {
+  id: string;
 }
